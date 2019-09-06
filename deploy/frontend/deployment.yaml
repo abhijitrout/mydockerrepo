@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mydockerrepo-frontend
+  namespace: mydockerrepo
+spec:
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: mydockerrepo
+      layer: frontend
+  replicas: 2
+  revisionHistoryLimit: 5
+  template: 
+    metadata:
+      labels:
+        app: mydockerrepo
+        layer: frontend
+    spec:
+      containers:
+      - name: mydockerrepo-frontend-container
+        image: abhijitrout/mydockerrepo-frontend:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "1"
+            memory: "500Mi"
+          requests:
+            cpu: "0.5"
+            memory: "200Mi"

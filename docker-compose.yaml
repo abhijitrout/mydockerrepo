@@ -1,0 +1,50 @@
+---
+version: "3.7"
+services:
+  mydockerrepo-frontend:
+    build:
+      context: ./frontend
+    image: abhijitrout/mydockerrepo-frontend:1.0
+    depends_on: 
+      - mydockerrepo-backend
+    environment:
+      BACKENDLB: mydockerrepo-backend
+    ports:
+      - "9000:80"
+    volumes:
+      - type: volume
+        source: mydockerrepo-frontend-logvol
+        target: /var/log
+  mydockerrepo-frontend-logs:
+    build:
+      context: ./awslogs
+    image: abhijitrout/mydockerrepo-frontend-logs:1.0
+    depends_on: 
+      - mydockerrepo-frontend
+    volumes:
+      - type: volume
+        source: mydockerrepo-frontend-logvol
+        target: /mnt/log
+        read_only: true
+  mydockerrepo-backend:
+    build:
+      context: ./backend
+    image: abhijitrout/mydockerrepo-backend:1.0
+    volumes:
+      - type: volume
+        source: mydockerrepo-backend-logvol
+        target: /var/log
+  mydockerrepo-backend-logs:
+    build:
+      context: ./awslogs
+    image: abhijitrout/mydockerrepo-backend-logs:1.0
+    depends_on: 
+      - mydockerrepo-backend
+    volumes:
+      - type: volume
+        source: mydockerrepo-backend-logvol
+        target: /mnt/log
+        read_only: true
+volumes:
+  mydockerrepo-frontend-logvol:
+  mydockerrepo-backend-logvol:
