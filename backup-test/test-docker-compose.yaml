@@ -15,6 +15,17 @@ services:
       - type: volume
         source: mydockerrepo-frontend-logvol
         target: /var/log
+  mydockerrepo-frontend-logs:
+    build:
+      context: ./awslogs
+    image: abhijitrout/mydockerrepo-frontend-logs:2.0
+    depends_on: 
+      - mydockerrepo-frontend
+    volumes:
+      - type: volume
+        source: mydockerrepo-frontend-logvol
+        target: /mnt/log
+        read_only: true
   mydockerrepo-backend:
     build:
       context: ./backend
@@ -23,14 +34,17 @@ services:
       - type: volume
         source: mydockerrepo-backend-logvol
         target: /var/log
-  myapp-db:
-    image: mysql:5.7
+  mydockerrepo-backend-logs:
+    build:
+      context: ./awslogs
+    image: abhijitrout/mydockerrepo-backend-logs:2.0
+    depends_on: 
+      - mydockerrepo-backend
     volumes:
       - type: volume
-        source: myapp-db-vol
-        target: /var/lib/mysql
+        source: mydockerrepo-backend-logvol
+        target: /mnt/log
+        read_only: true
 volumes:
   mydockerrepo-frontend-logvol:
   mydockerrepo-backend-logvol:
-  myapp-db-vol:
-  
