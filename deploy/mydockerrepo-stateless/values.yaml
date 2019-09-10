@@ -1,0 +1,5 @@
+---
+names:
+  msname: mydockerrepo
+  fename: frontend
+  bename: backendapi

@@ -2,21 +2,21 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Values.names.msname }}-{{ .Values.names.fename }}
-  namespace: {{ .Values.msname }}
+  name: mydockerrepo-frontend
+  namespace: mydockerrepo
 spec:
   minReadySeconds: 5
   selector:
     matchLabels:
-      app: {{ .Values.names.msname }}
-      layer: {{ .Values.names.fename }}
+      app: mydockerrepo
+      layer: frontend
   replicas: 2
   revisionHistoryLimit: 5
   template: 
     metadata:
       labels:
-        app: {{ .Values.names.msname }}
-        layer: {{ .Values.names.fename }}
+        app: mydockerrepo
+        layer: frontend
     spec:
       containers:
       - name: mydockerrepo-frontend-container
@@ -33,5 +33,5 @@ spec:
             memory: "200Mi"
         env:
           - name: BACKENDLB
-            value: {{ .Values.names.bename }}
+            value: backendapi
             
