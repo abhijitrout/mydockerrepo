@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: mydockerrepo-frontend-container
-        image: abhijitrout/mydockerrepo-frontend:2.0
+        image: BUILDTAG
         imagePullPolicy: Always
         ports:
         - containerPort: 80
